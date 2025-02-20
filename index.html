@@ -21,37 +21,32 @@
         }
         input {
             width: 50px;
+            text-align: center;
         }
     </style>
     <script>
         function updateTotals() {
-            let sections = document.querySelectorAll('table tr:nth-child(n+2)');
+            let sectionInputs = document.querySelectorAll("table tr td input.score");
+            let totalFields = document.querySelectorAll("table tr td input.total");
             let grandTotal = 0;
-            
-            let sectionInputs = document.querySelectorAll("table tr td input");
-            sectionInputs.forEach(input => input.value = 0);
-            
-            let currentInputIndex = 0;
+            let sectionIndex = 0;
             let sectionTotal = 0;
-            sections.forEach((row, index) => {
-                let cells = row.getElementsByTagName("td");
-                if (cells.length === 3) {
-                    let pointValue = parseInt(cells[1].textContent) || 0;
-                    sectionTotal += pointValue;
-                    grandTotal += pointValue;
-                } else if (cells.length === 2 && cells[0].colSpan === 2) {
-                    if (index !== 0) {
-                        sectionInputs[currentInputIndex].value = sectionTotal;
-                        currentInputIndex++;
-                    }
+            let sectionCounts = [3, 4, 4, 3]; // Nombre de critères par section
+            
+            sectionInputs.forEach((input, index) => {
+                let score = parseInt(input.value) || 0;
+                sectionTotal += score;
+                grandTotal += score;
+                
+                if ((index + 1) % sectionCounts[sectionIndex] === 0) {
+                    totalFields[sectionIndex].value = sectionTotal;
                     sectionTotal = 0;
+                    sectionIndex++;
                 }
             });
-            sectionInputs[currentInputIndex].value = sectionTotal;
-            sectionInputs[sectionInputs.length - 1].value = grandTotal;
+            
+            totalFields[totalFields.length - 1].value = grandTotal;
         }
-        
-        window.onload = updateTotals;
     </script>
 </head>
 <body>
@@ -63,95 +58,82 @@
         </tr>
         <tr>
             <td colspan="2"><strong>1. Création du Nom de l'Entreprise et du Produit</strong></td>
-            <td><input type="text" readonly></td>
+            <td><input type="text" class="total" readonly></td>
         </tr>
         <tr>
             <td>Originalité et pertinence du nom de l'entreprise</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Cohérence et clarté du nom du produit</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Justification des choix et réflexion menée</td>
-            <td>2</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td colspan="2"><strong>2. Création du Logo</strong></td>
-            <td><input type="text" readonly></td>
+            <td><input type="text" class="total" readonly></td>
         </tr>
         <tr>
             <td>Respect des consignes (simplicité, lisibilité, 2-3 couleurs max)</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Créativité et impact visuel du logo</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Qualité technique de la réalisation</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Présence et pertinence du slogan</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td colspan="2"><strong>3. Réalisation de l'Affiche Publicitaire</strong></td>
-            <td><input type="text" readonly></td>
+            <td><input type="text" class="total" readonly></td>
         </tr>
         <tr>
             <td>Présence des éléments obligatoires</td>
-            <td>2</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Design attractif et cohérent avec l'identité visuelle</td>
-            <td>2</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Clarté et lisibilité du contenu</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Absence de fautes d'orthographe</td>
-            <td>1</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td colspan="2"><strong>4. Implication et Comportement des Membres du Groupe</strong></td>
-            <td><input type="text" readonly></td>
+            <td><input type="text" class="total" readonly></td>
         </tr>
         <tr>
             <td>Travail collaboratif</td>
-            <td>2</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Investissement personnel et sérieux dans le projet</td>
-            <td>2</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
             <td>Attitude en classe</td>
-            <td>2</td>
-            <td></td>
+            <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr class="total">
             <td colspan="2">Total</td>
-            <td><input type="text" readonly></td>
+            <td><input type="text" class="total" readonly></td>
         </tr>
     </table>
 </body>
 </html>
+
 
