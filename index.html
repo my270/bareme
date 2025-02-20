@@ -26,26 +26,34 @@
     </style>
     <script>
         function updateTotals() {
-            let sectionInputs = document.querySelectorAll("table tr td input.score");
-            let totalFields = document.querySelectorAll("table tr td input.total");
+            let rows = document.querySelectorAll("table tr");
             let grandTotal = 0;
-            let sectionIndex = 0;
+            let currentTotalField = null;
             let sectionTotal = 0;
-            let sectionCounts = [3, 4, 4, 3]; // Nombre de critères par section
             
-            sectionInputs.forEach((input, index) => {
-                let score = parseInt(input.value) || 0;
-                sectionTotal += score;
-                grandTotal += score;
+            rows.forEach(row => {
+                let inputs = row.querySelectorAll("input.score");
+                let totalField = row.querySelector("input.total");
                 
-                if ((index + 1) % sectionCounts[sectionIndex] === 0) {
-                    totalFields[sectionIndex].value = sectionTotal;
+                if (totalField) {
+                    if (currentTotalField) {
+                        currentTotalField.value = sectionTotal;
+                    }
+                    currentTotalField = totalField;
                     sectionTotal = 0;
-                    sectionIndex++;
                 }
+                
+                inputs.forEach(input => {
+                    let value = parseInt(input.value) || 0;
+                    sectionTotal += value;
+                    grandTotal += value;
+                });
             });
             
-            totalFields[totalFields.length - 1].value = grandTotal;
+            if (currentTotalField) {
+                currentTotalField.value = sectionTotal;
+            }
+            document.getElementById("grandTotal").value = grandTotal;
         }
     </script>
 </head>
@@ -77,19 +85,19 @@
             <td><input type="text" class="total" readonly></td>
         </tr>
         <tr>
-            <td>Respect des consignes (simplicité, lisibilité, 2-3 couleurs max)</td>
+            <td>Respect des consignes</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Créativité et impact visuel du logo</td>
+            <td>Créativité</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Qualité technique de la réalisation</td>
+            <td>Qualité technique</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Présence et pertinence du slogan</td>
+            <td>Présence du slogan</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
@@ -101,19 +109,19 @@
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Design attractif et cohérent avec l'identité visuelle</td>
+            <td>Design attractif</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Clarté et lisibilité du contenu</td>
+            <td>Clarté du contenu</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Absence de fautes d'orthographe</td>
+            <td>Absence de fautes</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td colspan="2"><strong>4. Implication et Comportement des Membres du Groupe</strong></td>
+            <td colspan="2"><strong>4. Implication et Comportement</strong></td>
             <td><input type="text" class="total" readonly></td>
         </tr>
         <tr>
@@ -121,7 +129,7 @@
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Investissement personnel et sérieux dans le projet</td>
+            <td>Investissement personnel</td>
             <td><input type="number" class="score" oninput="updateTotals()"></td>
         </tr>
         <tr>
@@ -130,12 +138,10 @@
         </tr>
         <tr class="total">
             <td colspan="2">Total</td>
-            <td><input type="text" class="total" readonly></td>
+            <td><input type="text" id="grandTotal" readonly></td>
         </tr>
     </table>
 </body>
-</html>
-
 </html>
 
 
