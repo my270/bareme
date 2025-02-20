@@ -56,16 +56,8 @@
             document.getElementById("grandTotal").value = grandTotal;
         }
 
-        function downloadPage() {
-            let element = document.createElement('a');
-            let pageContent = document.documentElement.outerHTML;
-            let blob = new Blob([pageContent], { type: 'text/html' });
-            let url = URL.createObjectURL(blob);
-            element.href = url;
-            element.download = "evaluation_resultats.html";
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
+        function downloadPDF() {
+            window.print();
         }
     </script>
 </head>
@@ -153,10 +145,8 @@
             <td><input type="text" id="grandTotal" readonly></td>
         </tr>
     </table>
-    <button onclick="downloadPage()">Télécharger la page</button>
+    <button onclick="downloadPDF()">Télécharger en PDF</button>
 </body>
-</html>
-
 </html>
 
 
