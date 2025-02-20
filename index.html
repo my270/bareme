@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évaluation Affiche Publicitaire</title>
     <style>
         table {
-            width: 100%;
+            width: 70%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 20px auto;
         }
         th, td {
             border: 1px solid black;
@@ -26,38 +29,11 @@
     </style>
     <script>
         function updateTotals() {
-            let rows = document.querySelectorAll("table tr");
-            let grandTotal = 0;
-            let currentTotalField = null;
-            let sectionTotal = 0;
-            
-            rows.forEach(row => {
-                let inputs = row.querySelectorAll("input.score");
-                let totalField = row.querySelector("input.total");
-                
-                if (totalField) {
-                    if (currentTotalField) {
-                        currentTotalField.value = sectionTotal;
-                    }
-                    currentTotalField = totalField;
-                    sectionTotal = 0;
-                }
-                
-                inputs.forEach(input => {
-                    let value = parseInt(input.value) || 0;
-                    sectionTotal += value;
-                    grandTotal += value;
-                });
+            let total = 0;
+            document.querySelectorAll(".total-ligne").forEach(input => {
+                total += parseInt(input.value) || 0;
             });
-            
-            if (currentTotalField) {
-                currentTotalField.value = sectionTotal;
-            }
-            document.getElementById("grandTotal").value = grandTotal;
-        }
-
-        function downloadPDF() {
-            window.print();
+            document.getElementById("grandTotal").value = total;
         }
     </script>
 </head>
@@ -69,84 +45,100 @@
             <th>Total</th>
         </tr>
         <tr>
-            <td colspan="2"><strong>1. Création du Nom de l'Entreprise et du Produit</strong></td>
-            <td><input type="text" class="total" readonly></td>
+            <td><strong>1. Création du Nom de l'Entreprise et du Produit</strong></td>
+            <td>/4</td>
+            <td><input type="number" class="total-ligne" min="0" max="4" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Originalité et pertinence du nom de l'entreprise</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Originalité et pertinence du nom de l'entreprise</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Cohérence et clarté du nom du produit</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Cohérence et clarté du nom du produit</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Justification des choix et réflexion menée</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Justification des choix et réflexion menée</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="2"><strong>2. Création du Logo</strong></td>
-            <td><input type="text" class="total" readonly></td>
+            <td><strong>2. Création du Logo</strong></td>
+            <td>/4</td>
+            <td><input type="number" class="total-ligne" min="0" max="4" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Respect des consignes</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Respect des consignes (simplicité, lisibilité, 2-3 couleurs max)</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Créativité</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Créativité et impact visuel du logo</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Qualité technique</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Qualité technique de la réalisation</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Présence du slogan</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Présence et pertinence du slogan</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="2"><strong>3. Réalisation de l'Affiche Publicitaire</strong></td>
-            <td><input type="text" class="total" readonly></td>
+            <td><strong>3. Réalisation de l'Affiche Publicitaire</strong></td>
+            <td>/6</td>
+            <td><input type="number" class="total-ligne" min="0" max="6" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Présence des éléments obligatoires</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Présence des éléments obligatoires</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Design attractif</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Design attractif et cohérent</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Clarté du contenu</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Clarté et lisibilité du contenu</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Absence de fautes</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Absence de fautes d'orthographe</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="2"><strong>4. Implication et Comportement</strong></td>
-            <td><input type="text" class="total" readonly></td>
+            <td><strong>4. Implication et Comportement</strong></td>
+            <td>/6</td>
+            <td><input type="number" class="total-ligne" min="0" max="6" oninput="updateTotals()"></td>
         </tr>
         <tr>
-            <td>Travail collaboratif</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Travail collaboratif et répartition des tâches</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Investissement personnel</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Investissement personnel et sérieux dans le projet</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td>Attitude en classe</td>
-            <td><input type="number" class="score" oninput="updateTotals()"></td>
+            <td>• Attitude en classe et autonomie</td>
+            <td></td>
+            <td></td>
         </tr>
         <tr class="total">
             <td colspan="2">Total</td>
             <td><input type="text" id="grandTotal" readonly></td>
         </tr>
     </table>
-    <button onclick="downloadPDF()">Télécharger en PDF</button>
+    <button onclick="window.print()">Télécharger en PDF</button>
 </body>
 </html>
-
-
