@@ -23,6 +23,36 @@
             width: 50px;
         }
     </style>
+    <script>
+        function updateTotals() {
+            let sections = document.querySelectorAll('table tr:nth-child(n+2)');
+            let grandTotal = 0;
+            
+            let sectionInputs = document.querySelectorAll("table tr td input");
+            sectionInputs.forEach(input => input.value = 0);
+            
+            let currentInputIndex = 0;
+            let sectionTotal = 0;
+            sections.forEach((row, index) => {
+                let cells = row.getElementsByTagName("td");
+                if (cells.length === 3) {
+                    let pointValue = parseInt(cells[1].textContent) || 0;
+                    sectionTotal += pointValue;
+                    grandTotal += pointValue;
+                } else if (cells.length === 2 && cells[0].colSpan === 2) {
+                    if (index !== 0) {
+                        sectionInputs[currentInputIndex].value = sectionTotal;
+                        currentInputIndex++;
+                    }
+                    sectionTotal = 0;
+                }
+            });
+            sectionInputs[currentInputIndex].value = sectionTotal;
+            sectionInputs[sectionInputs.length - 1].value = grandTotal;
+        }
+        
+        window.onload = updateTotals;
+    </script>
 </head>
 <body>
     <table>
@@ -33,7 +63,7 @@
         </tr>
         <tr>
             <td colspan="2"><strong>1. Création du Nom de l'Entreprise et du Produit</strong></td>
-            <td><input type="text" maxlength="4"></td>
+            <td><input type="text" readonly></td>
         </tr>
         <tr>
             <td>Originalité et pertinence du nom de l'entreprise</td>
@@ -52,7 +82,7 @@
         </tr>
         <tr>
             <td colspan="2"><strong>2. Création du Logo</strong></td>
-            <td><input type="text" maxlength="4"></td>
+            <td><input type="text" readonly></td>
         </tr>
         <tr>
             <td>Respect des consignes (simplicité, lisibilité, 2-3 couleurs max)</td>
@@ -76,7 +106,7 @@
         </tr>
         <tr>
             <td colspan="2"><strong>3. Réalisation de l'Affiche Publicitaire</strong></td>
-            <td><input type="text" maxlength="4"></td>
+            <td><input type="text" readonly></td>
         </tr>
         <tr>
             <td>Présence des éléments obligatoires</td>
@@ -100,7 +130,7 @@
         </tr>
         <tr>
             <td colspan="2"><strong>4. Implication et Comportement des Membres du Groupe</strong></td>
-            <td><input type="text" maxlength="4"></td>
+            <td><input type="text" readonly></td>
         </tr>
         <tr>
             <td>Travail collaboratif</td>
@@ -119,7 +149,7 @@
         </tr>
         <tr class="total">
             <td colspan="2">Total</td>
-            <td><input type="text" maxlength="4"></td>
+            <td><input type="text" readonly></td>
         </tr>
     </table>
 </body>
